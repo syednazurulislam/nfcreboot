@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p {
+    border: 2px solid black;
+    outline: #4CAF50 solid 10px;
+    margin: auto;    
+    padding: 20px;
+    text-align: center;
+}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+.button {border-radius: 4px;}
+</style>
+</head>
+<body>
+   
+        
+    
+<p>Your transactionID is : <%=txid%></p><br>
+<form method="post" action="/staylogin">
+    <input type="hidden"  value="<%=address%>" name="addressdata" >
+    <input type="hidden"  value="<%=city%>"  name="city" >
+<input id="submit"  type="submit" value="next" class="button">
+
+</form>
+</body>
+</html>

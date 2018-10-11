@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+  <title>ASSET</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <style> 
+    .input { margin-top:30px;}
+     .inputone { padding-top:10px;}
+    #submit { margin-top:20px;}
+  </style>
+<div class="container">  
+ <form>
+    <div class="input">
+      <label for="address">FROM ADDRESS </label>
+      <input type="text" class="form-control" id="usr">           
+    </div>   
+    
+  <div class="inputone">
+    <label for="assetname">ASSET NAME </label>
+    <select class="form-control">
+      <option>ASSET ONE</option>
+      <option>ASSET TWO</option>
+      <option>ASSET THREE</option>
+    </select>
+  </div>
+   <div class="inputone">
+    <label for="assetname">TO ADDRESS </label>
+    <select class="form-control" >
+      <option>ADDRESS ONE</option>
+      <option>ADDRESS TWO</option>
+      <option>ADDRESS THREE</option>
+    </select>
+  </div>
+    
+   <div class=" form-group text-center">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <input id="submit"  type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </div>
+   
+  </form>
+</div>
+<h1><%= array%></h1>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+
+<html lang="en">
+        <head>
+          <title>ASSET</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </head>
+        <body>
+          <style> 
+            .input { margin-top:30px;}
+             .inputone { padding-top:10px;}
+            #submit { margin-top:20px;}
+          </style>
+        <div class="container">
+         <form method="post" action="/assetstransfer">
+            <div class="input">
+              <label for="address">FROM ADDRESS </label>
+              <select class="form-control" name="fromaddress" >
+                    <%
+                    var i=0;
+                    while(address[i]){
+                    %>
+                  <option><%=address[i]%></option>
+                  <% 
+                  i++
+                    }
+                  %>
+                </select>          
+            </div>
+            
+          <div class="inputone">
+            <label for="assetname">ASSET NAME </label>
+            <input class="form-control" list="assets" name="assetname" >
+              <!-- <option>ASSET ONE</option>
+              <option>ASSET TWO</option>
+              <option>ASSET THREE</option> -->
+              </input>
+          </div>
+           <div class="inputone">
+            <label for="assetname">TO ADDRESS </label>
+            <select class="form-control" name="toaddress" >
+                <%
+                var i=0;
+                while(address[i]){
+                %>
+
+              <option><%=address[i]%></option>
+              <% 
+              i++
+                }
+              %>
+            </select>
+          </div>
+          <datalist id="assets">
+                <%
+                var i=0;
+                while(assert2[i]){
+                %>
+
+              <option><%=assert2[i].name%>
+              <% 
+              i++
+                }
+              %>
+          </datalist>
+            
+           <div class=" form-group text-center">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <input id="submit"  type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                    </div>
+          </form>
+        </div>
+        <%=txid %>
+
+        
+        </body>
+        </html>
+

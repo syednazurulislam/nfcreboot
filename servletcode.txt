@@ -1,0 +1,197 @@
+var http = require('http');
+var express = require('express');
+var app = express();
+var fs=require('fs');
+var url = require('url');
+var querystring = require('querystring');
+var qdata="";
+var number="0";
+var ok="notok";
+app.use('/ok', express.static(__dirname + '/public/ok.html'));
+app.use('/notok', express.static(__dirname + '/public/notok.html'));
+app.use('/tamper', express.static(__dirname + '/public/tamper.html'));
+app.get('/ok', function(req, res){
+console.log('got ok');
+});
+
+app.get('/notok', function(req, res){
+  console.log('got ok');
+  });
+
+app.get('/manu/:mid', function(req, res){
+  var q = req.params.mid;
+  console.log(q);
+var q1 = q.slice(0,-7);
+
+ var p = {
+  'TrackingId': q1
+ };
+  var MongoClient = require('mongodb').MongoClient;
+
+ var link1 = "mongodb://localhost:27017/";
+
+  MongoClient.connect(link1, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("user_crud1");
+    //Find the first documongment in the customers collection:
+    dbo.collection("users").findOne(p, function(err, result) {
+      if (err)throw err;
+      var res1=result;
+      //console.log(result.manufacturedate);
+
+      if(res1){
+      console.log("it is valid");
+      return res.redirect('/ok');
+
+    }else{
+        console.log("it is invalid");
+        return res.redirect('/notok');
+      }
+
+
+      db.close();
+    });
+});
+
+
+});
+
+
+
+
+
+
+
+app.get('/api/comb/:mid',function(req,res){
+var gi = req.params.mid;
+console.log(gi);
+var gii=gi.split(",");
+var a={'username':gii[0],'Branchname':gii[1],'phonenumber':gii[2],'password':gii[3]}
+console.log("this is from prat system "+gii[2]);
+
+
+
+var MongoClient = require('mongodb').MongoClient;
+var link5 = "mongodb://localhost:27017/";
+
+MongoClient.connect(link5, function(err, db) {
+  if (err) throw err;
+ var dbo = db.db("user_crud1");
+
+  dbo.collection("registerusers").insertOne(a, function(err, result) {
+    if (err) throw err;
+var u = result;
+if(u){
+  console.log("inserted");
+  var s = {
+                 status: 'inserted'
+        };
+       return res.json(s);
+}
+    console.log("1 document inserted");
+    db.close();
+  });
+});
+});
+
+
+
+
+
+app.get('/api/manu/:mid', function(req, res){
+  var q = req.params.mid;
+  console.log(q);
+var mainstr=q.split("&");
+console.log("mainstr");
+console.log(mainstr);
+var str1=mainstr[0];
+var str2=mainstr[1];
+console.log(str1);
+console.log(str2);
+var q1 = str1.slice(0,-7);
+console.log(q1);
+
+
+ var p = {
+  'TrackingId': q1
+ };
+
+var p1 = {
+'TrackingId': q1,
+'TamperId': str2
+};
+
+var p2 = {
+'TamperId': str2
+};
+
+  var MongoClient = require('mongodb').MongoClient;
+  var link1 = "mongodb://localhost:27017/"
+  MongoClient.connect(link1, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("user_crud1");
+    //Find the first documongment in the customers collection:
+    dbo.collection("users").findOne(p, function(err, result) {
+if (err)throw err;
+      var res1=result;
+      //console.log(result.manufacturedate);
+
+
+
+
+      if(res1){
+console.log("im in first if loop--------");
+ dbo.collection("users").findOne(p1, function(err,result){
+if (err)throw err;
+        var res2=result;
+        if(res2){
+        console.log("it is valid");
+ var s = {
+                status: 'ok'
+       };
+      return res.json(s);
+
+        }else{
+      console.log("im in tamper loop");
+ var s = {
+                status: 'tampered'
+       };
+ return res.json(s);
+
+    }
+ db.close();
+    });
+
+}
+ else{
+      dbo.collection("users").findOne(p2, function(err, result) {
+        if (err)throw err;
+        var res3=result;
+        if(res3){
+        console.log("tamper is ok ,no recode found");
+
+      var s = {
+                status: 'tamperok'
+       };
+        return res.json(s);
+        }else{
+            console.log("it is invalid");
+      var s = {
+                status: 'notok'
+       };
+        return res.json(s);
+
+        }
+
+       db.close();
+    });
+}
+
+      db.close();
+    });
+  });
+
+
+});
+
+app.listen(8080);
